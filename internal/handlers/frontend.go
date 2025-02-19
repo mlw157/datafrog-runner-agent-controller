@@ -5,6 +5,6 @@ import "github.com/labstack/echo/v4"
 type FrontendHandler struct {
 }
 
-func (h *InstanceHandler) ServeDashboard(c echo.Context) error {
+func (h *FrontendHandler) ServeDashboard(c echo.Context) error {
 	return c.File("templates/index.html")
 }

@@ -12,7 +12,7 @@ func SetupRoutes(e *echo.Echo, db *gorm.DB) {
 	jobHandler := &handlers.JobHandler{DB: db}
 	memoryLogHandler := &handlers.MemoryLogHandler{DB: db}
 
-	SetupFrontendRoutes(e, frontendHandler, instanceHandler, jobHandler, memoryLogHandler)
+	SetupFrontendRoutes(e, frontendHandler)
 
 	api := e.Group("/api")
 	SetupInstanceRoutes(api, instanceHandler)

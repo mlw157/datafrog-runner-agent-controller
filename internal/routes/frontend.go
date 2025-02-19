@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func SetupFrontendRoutes(e *echo.Echo, handler *handlers.FrontendHandler, instanceHandler *handlers.InstanceHandler, jobHandler *handlers.JobHandler, memoryLogHandler *handlers.MemoryLogHandler) {
+func SetupFrontendRoutes(e *echo.Echo, handler *handlers.FrontendHandler) {
 
 	e.GET("/", handler.ServeDashboard)
 }
