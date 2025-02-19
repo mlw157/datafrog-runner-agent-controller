@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"agent-controller/internal/database"
@@ -6,17 +6,10 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
-	"os"
 )
 
 func main() {
-	dbPath := os.Getenv("DB_PATH")
-
-	if dbPath == "" {
-		log.Fatal("Provide DB_PATH environment variable")
-	}
-
-	db, err := database.InitDB(dbPath)
+	db, err := database.InitDB("data.db")
 
 	if err != nil {
 		log.Fatal("Failed to initialize database:", err)

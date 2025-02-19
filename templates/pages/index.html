@@ -1,13 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Controller Dashboard</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .instance, .job { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+        h2 { margin-top: 0; }
+    </style>
 </head>
 <body>
+<h1>Agent Controller Dashboard</h1>
 
+<!-- Instances Section -->
+<div id="instances" hx-get="/api/instances" hx-trigger="every 30s">
+    Loading instances...
+</div>
+
+<!-- Jobs Section -->
+<div id="jobs" hx-get="/api/jobs" hx-trigger="every 30s">
+    Loading jobs...
+</div>
+
+<!-- HTMX Script -->
+<script>
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+        if (evt.detail.successful) {
+            // Render the fetched data
+            const response = JSON.parse(evt.detail.xhr.responseText);
+            const targetId = evt.detail.requestConfig.path.startsWith("/api/instances") ? "instances" : "jobs";
+            const targetElement = document.getElementById(targetId);
+
+            // Clear existing content
+            targetElement.innerHTML = "";
+
+            // Render instances or jobs
+            if (targetId === "instances") {
+                response.forEach(instance => {
+                    const instanceDiv = document.createElement("div");
+                    instanceDiv.className = "instance";
+                    instanceDiv.innerHTML = `
+                            <h2>Instance: ${instance.instance_id}</h2>
+                            <p>Type: ${instance.type}</p>
+                            <p>Availability Zone: ${instance.availability_zone}</p>
+                            <p>Private IP: ${instance.private_ip_address}</p>
+                        `;
+                    targetElement.appendChild(instanceDiv);
+                });
+            } else if (targetId === "jobs") {
+                response.forEach(job => {
+                    const jobDiv = document.createElement("div");
+                    jobDiv.className = "job";
+                    jobDiv.innerHTML = `
+                            <h2>Job: ${job.id}</h2>
+                            <p>Repository: ${job.repository}</p>
+                            <p>Workflow: ${job.workflow}</p>
+                            <p>Start Time: ${job.start_time}</p>
+                            <p>End Time: ${job.end_time}</p>
+                        `;
+                    targetElement.appendChild(jobDiv);
+                });
+            }
+        }
+    });
+</script>
 </body>
 </html>
