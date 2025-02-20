@@ -7,13 +7,22 @@ import (
 
 type Instance struct {
 	gorm.Model
-	InstanceID       string `gorm:"uniqueIndex"`
-	Type             string
-	AvailabilityZone string
-	PrivateIPAddress string
-	LastSeenAt       time.Time
+	InstanceID       string      `json:"instance_id" gorm:"uniqueIndex"`
+	Type             string      `json:"type"`
+	AvailabilityZone string      `json:"availability_zone"`
+	PrivateIPAddress string      `json:"private_ip_address"`
+	LastSeenAt       time.Time   `json:"last_seen_at"`
 	MemoryMetrics    []MemoryLog `gorm:"foreignKey:InstanceID;references:InstanceID;constraint:OnDelete:CASCADE"`
 	JobMetrics       []Job       `gorm:"foreignKey:InstanceID;references:InstanceID;constraint:OnDelete:CASCADE"`
+}
+
+type Job struct {
+	gorm.Model
+	InstanceID string    `json:"instance_id" gorm:"index"`
+	Repository string    `json:"repository"`
+	Workflow   string    `json:"workflow"`
+	StartTime  time.Time `gorm:"index"`
+	EndTime    time.Time `gorm:"index"`
 }
 
 type MemoryLog struct {
@@ -23,13 +32,4 @@ type MemoryLog struct {
 	Used       int
 	Free       int
 	Timestamp  time.Time `gorm:"index"`
-}
-
-type Job struct {
-	gorm.Model
-	InstanceID string `gorm:"index"`
-	Repository string
-	Workflow   string
-	StartTime  time.Time `gorm:"index"`
-	EndTime    time.Time `gorm:"index"`
 }
