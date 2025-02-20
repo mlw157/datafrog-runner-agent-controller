@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	db, err := database.InitDB("data.db")
+	db, err := database.InitDB("/app/data/data.db")
 
 	if err != nil {
 		log.Fatal("Failed to initialize database:", err)
