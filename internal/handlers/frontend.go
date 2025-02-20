@@ -6,5 +6,5 @@ type FrontendHandler struct {
 }
 
 func (h *FrontendHandler) ServeDashboard(c echo.Context) error {
-	return c.File("../../templates/pages/index.html")
+	return c.File("templates/pages/index.html")
 }

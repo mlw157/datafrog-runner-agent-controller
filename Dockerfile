@@ -19,6 +19,8 @@ RUN apk --no-cache add libgcc
 WORKDIR /app
 
 COPY --from=builder /app/server /app/
+COPY --from=builder /app/templates /app/templates
+
 
 EXPOSE 8080
 
