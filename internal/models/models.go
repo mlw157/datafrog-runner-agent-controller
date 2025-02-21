@@ -27,9 +27,9 @@ type Job struct {
 
 type MemoryLog struct {
 	gorm.Model
-	InstanceID string `gorm:"index"`
-	Total      int
-	Used       int
-	Free       int
+	InstanceID string    `json:"instance_id" gorm:"index"`
+	Total      int       `json:"total"`
+	Used       int       `json:"used"`
+	Free       int       `json:"free"`
 	Timestamp  time.Time `gorm:"index"`
 }
