@@ -31,5 +31,5 @@ type MemoryLog struct {
 	Total      int       `json:"total"`
 	Used       int       `json:"used"`
 	Free       int       `json:"free"`
-	Timestamp  time.Time `gorm:"index"`
+	Timestamp  time.Time `json:"timestamp" gorm:"index"`
 }
