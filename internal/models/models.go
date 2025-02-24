@@ -18,11 +18,12 @@ type Instance struct {
 
 type Job struct {
 	gorm.Model
-	InstanceID string    `json:"instance_id" gorm:"index"`
-	Repository string    `json:"repository"`
-	Workflow   string    `json:"workflow"`
-	StartTime  time.Time `gorm:"index"`
-	EndTime    time.Time `gorm:"index"`
+	InstanceID   string    `json:"instance_id" gorm:"index"`
+	Organization string    `json:"organization"`
+	Repository   string    `json:"repository"`
+	Workflow     string    `json:"workflow"`
+	StartTime    time.Time `gorm:"index"`
+	EndTime      time.Time `gorm:"index"`
 }
 
 type MemoryLog struct {
